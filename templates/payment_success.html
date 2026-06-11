@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Payment Successful — Riverside Home Guide{% endblock %}
+{% block content %}
+<div class="unlock-wrap">
+  <div class="unlock-card success-card">
+    <span class="unlock-icon">🎉</span>
+    <h1>You're all set!</h1>
+    <p class="unlock-sub">
+      Your $40 payment went through. You now have <strong>lifetime access</strong>
+      to the AI home buying assistant. Ask anything — nothing is a dumb question.
+    </p>
+    <a href="/ask" class="btn unlock-btn" style="display:block; text-align:center;">
+      Start Asking Questions →
+    </a>
+    <p class="unlock-note" style="margin-top:16px;">
+      Check your inbox — Stripe sent you a receipt. Save your email address
+      to restore access anytime on any device.
+    </p>
+  </div>
+</div>
+{% endblock %}

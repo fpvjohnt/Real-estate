@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Payment Calculator — Riverside Home Guide{% endblock %}
+{% block content %}
+<h1>Monthly Payment Calculator</h1>
+<p class="page-sub">See what a home would really cost you each month — not just the loan,
+  but taxes, insurance, and mortgage insurance too. Defaults are set for Riverside County.</p>
+
+<div class="calc-layout">
+  <form id="calc-form" class="calc-form" onsubmit="return false;">
+    <label>
+      Home price
+      <div class="input-wrap"><span>$</span>
+        <input type="number" id="price" value="550000" min="0" step="1000">
+      </div>
+    </label>
+
+    <label>
+      Down payment (% of price)
+      <div class="input-wrap">
+        <input type="number" id="down" value="3.5" min="0" max="100" step="0.5">
+        <span>%</span>
+      </div>
+      <small id="down-dollars" class="hint"></small>
+    </label>
+
+    <label>
+      Interest rate (yearly)
+      <div class="input-wrap">
+        <input type="number" id="rate" value="6.5" min="0" max="20" step="0.125">
+        <span>%</span>
+      </div>
+    </label>
+
+    <label>
+      Loan length
+      <select id="term">
+        <option value="30" selected>30 years (most common)</option>
+        <option value="20">20 years</option>
+        <option value="15">15 years</option>
+      </select>
+    </label>
+
+    <label class="toggle">
+      <input type="checkbox" id="fha" checked>
+      <span>FHA loan (adds required mortgage insurance — MIP)</span>
+    </label>
+
+    <details class="calc-advanced">
+      <summary>Advanced: taxes, insurance, HOA</summary>
+      <label>
+        Property tax rate (yearly, % of price)
+        <div class="input-wrap">
+          <input type="number" id="taxrate" value="1.15" min="0" max="5" step="0.01">
+          <span>%</span>
+        </div>
+        <small class="hint">Riverside County is typically around 1.1%–1.25% with special
+          assessments. Check the exact parcel before you buy.</small>
+      </label>
+      <label>
+        Home insurance (per year)
+        <div class="input-wrap"><span>$</span>
+          <input type="number" id="insurance" value="1400" min="0" step="50">
+        </div>
+      </label>
+      <label>
+        HOA fee (per month)
+        <div class="input-wrap"><span>$</span>
+          <input type="number" id="hoa" value="0" min="0" step="5">
+        </div>
+      </label>
+    </details>
+  </form>
+
+  <div class="calc-result">
+    <div class="calc-total">
+      <span class="calc-total-label">Estimated monthly payment</span>
+      <span class="calc-total-amount" id="total">$0</span>
+    </div>
+    <ul class="calc-breakdown">
+      <li><span>Loan (principal &amp; interest)</span><strong id="pi">$0</strong></li>
+      <li><span>Property taxes</span><strong id="tax">$0</strong></li>
+      <li><span>Home insurance</span><strong id="ins">$0</strong></li>
+      <li id="mip-row"><span>FHA mortgage insurance (MIP)</span><strong id="mip">$0</strong></li>
+      <li id="hoa-row"><span>HOA</span><strong id="hoa-out">$0</strong></li>
+    </ul>
+    <div class="calc-cash">
+      <h3>Cash you'd need upfront (estimate)</h3>
+      <ul class="calc-breakdown">
+        <li><span>Down payment</span><strong id="cash-down">$0</strong></li>
+        <li><span>Closing costs (2–5% of price)</span><strong id="cash-closing">$0</strong></li>
+      </ul>
+    </div>
+    <p class="calc-note">This is an estimate to help you plan — your lender will give you
+      exact numbers. FHA loans also add an upfront mortgage insurance fee (1.75% of the
+      loan) which is usually rolled into the loan, not paid in cash. Verify rates at
+      <a href="https://www.hud.gov" target="_blank" rel="noopener">HUD.gov</a> and down
+      payment help at <a href="https://www.calhfa.ca.gov" target="_blank" rel="noopener">CalHFA</a>.</p>
+    <a href="/ask" class="btn">Ask AI about these numbers →</a>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='calculator.js') }}"></script>
+{% endblock %}

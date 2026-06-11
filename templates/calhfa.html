@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% block title %}CalHFA & Down Payment Program Finder — Riverside Home Guide{% endblock %}
+{% block content %}
+<h1>Down Payment Program Finder</h1>
+<p class="page-sub">Answer 5 quick questions to see which California down payment assistance
+  programs you likely qualify for in Riverside County. Free — no account needed.</p>
+
+<div class="dpa-finder">
+  <form id="dpa-form" class="dpa-form">
+
+    <div class="dpa-question">
+      <label>1. What is your total household income before taxes?</label>
+      <div class="dpa-options">
+        <label class="dpa-opt"><input type="radio" name="income" value="under_60k" required>
+          <span>Under $60,000</span></label>
+        <label class="dpa-opt"><input type="radio" name="income" value="60k_100k">
+          <span>$60,000 – $100,000</span></label>
+        <label class="dpa-opt"><input type="radio" name="income" value="100k_184k">
+          <span>$100,000 – $184,600</span></label>
+        <label class="dpa-opt"><input type="radio" name="income" value="over_184k">
+          <span>Over $184,600</span></label>
+      </div>
+    </div>
+
+    <div class="dpa-question">
+      <label>2. What is your credit score range?</label>
+      <div class="dpa-options">
+        <label class="dpa-opt"><input type="radio" name="credit" value="below_580" required>
+          <span>Below 580</span></label>
+        <label class="dpa-opt"><input type="radio" name="credit" value="580_639">
+          <span>580 – 639</span></label>
+        <label class="dpa-opt"><input type="radio" name="credit" value="640_659">
+          <span>640 – 659</span></label>
+        <label class="dpa-opt"><input type="radio" name="credit" value="660_679">
+          <span>660 – 679</span></label>
+        <label class="dpa-opt"><input type="radio" name="credit" value="680_plus">
+          <span>680 or higher</span></label>
+      </div>
+    </div>
+
+    <div class="dpa-question">
+      <label>3. Have you owned a home in the last 3 years?</label>
+      <small class="hint">If no — you count as a first-time buyer even if you owned a home long ago.</small>
+      <div class="dpa-options">
+        <label class="dpa-opt"><input type="radio" name="firsttime" value="yes" required>
+          <span>No — I have not owned a home in the last 3 years</span></label>
+        <label class="dpa-opt"><input type="radio" name="firsttime" value="no">
+          <span>Yes — I owned a home in the last 3 years</span></label>
+      </div>
+    </div>
+
+    <div class="dpa-question">
+      <label>4. How much do you have saved for down payment and closing costs?</label>
+      <div class="dpa-options">
+        <label class="dpa-opt"><input type="radio" name="savings" value="under_5k" required>
+          <span>Under $5,000</span></label>
+        <label class="dpa-opt"><input type="radio" name="savings" value="5k_15k">
+          <span>$5,000 – $15,000</span></label>
+        <label class="dpa-opt"><input type="radio" name="savings" value="over_15k">
+          <span>Over $15,000</span></label>
+      </div>
+    </div>
+
+    <div class="dpa-question">
+      <label>5. Are you an active military member or veteran?</label>
+      <div class="dpa-options">
+        <label class="dpa-opt"><input type="radio" name="military" value="yes" required>
+          <span>Yes — active military or veteran</span></label>
+        <label class="dpa-opt"><input type="radio" name="military" value="no">
+          <span>No</span></label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-big">Check My Programs</button>
+  </form>
+
+  <div id="dpa-results" class="dpa-results" style="display:none;"></div>
+</div>
+
+<script>
+var PROGRAMS = [
+  {
+    name: 'CalHFA FHA Loan',
+    tag: 'Most Popular',
+    tagColor: 'green',
+    desc: 'A 30-year fixed FHA loan backed by CalHFA. Requires only 3.5% down — and that down payment can come entirely from assistance programs below. This is the most common path for first-time buyers in Riverside County.',
+    reqs: ['First-time buyer (no ownership in last 3 years)', 'Household income under $184,600', 'Credit score 660 or higher'],
+    url: 'https://www.calhfa.ca.gov/homebuyer/programs/myhome.htm',
+    check: function(d) {
+      return d.firsttime === 'yes' && d.income !== 'over_184k' &&
+             d.credit !== 'below_580' && d.credit !== '580_639';
+    }
+  },
+  {
+    name: 'CalHFA MyHome Assistance',
+    tag: 'Down Payment Help',
+    tagColor: 'blue',
+    desc: 'A deferred-payment loan up to 3.5% of the home price for your down payment. You pay nothing back until you sell, refinance, or pay off the home. Stacks directly on top of the CalHFA FHA loan — meaning you may need very little cash at closing.',
+    reqs: ['First-time buyer', 'Income under $184,600', 'Credit score 660 or higher', 'Must pair with a CalHFA first mortgage'],
+    url: 'https://www.calhfa.ca.gov/homebuyer/programs/myhome.htm',
+    check: function(d) {
+      return d.firsttime === 'yes' && d.income !== 'over_184k' &&
+             d.credit !== 'below_580' && d.credit !== '580_639';
+    }
+  },
+  {
+    name: 'CalHFA Zero Interest Program (ZIP)',
+    tag: 'Closing Costs Help',
+    tagColor: 'blue',
+    desc: 'Up to 3% of your loan amount to cover closing costs — at 0% interest, deferred until you sell or refinance. When stacked with CalHFA FHA + MyHome, this can cover almost all of your out-of-pocket costs.',
+    reqs: ['First-time buyer', 'Income under $184,600', 'Credit score 660 or higher', 'Must pair with a CalHFA first mortgage'],
+    url: 'https://www.calhfa.ca.gov/homebuyer/programs/zip.htm',
+    check: function(d) {
+      return d.firsttime === 'yes' && d.income !== 'over_184k' &&
+             d.credit !== 'below_580' && d.credit !== '580_639';
+    }
+  },
+  {
+    name: 'GSFA Platinum Grant',
+    tag: 'Free Grant — No Repayment',
+    tagColor: 'gold',
+    desc: 'A grant of up to 5.5% of the loan amount for down payment and closing costs. Unlike a loan, you never repay a grant. Available in Riverside County. Does NOT require you to be a first-time buyer.',
+    reqs: ['Income under $176,640 (Riverside County limit)', 'Credit score 640 or higher', 'Any buyer — not required to be first-time'],
+    url: 'https://www.gsfahome.org/programs/platinum',
+    check: function(d) {
+      return d.income !== 'over_184k' &&
+             d.credit !== 'below_580' && d.credit !== '580_639';
+    }
+  },
+  {
+    name: 'CalHFA Conventional Loan',
+    tag: 'No FHA Required',
+    tagColor: 'green',
+    desc: 'A conventional (non-FHA) loan with 3% down. No upfront FHA mortgage insurance premium, which saves money long-term if you have strong credit. Can be combined with MyHome down payment assistance.',
+    reqs: ['First-time buyer', 'Income under $184,600', 'Credit score 680 or higher'],
+    url: 'https://www.calhfa.ca.gov/homebuyer/programs/conventional.htm',
+    check: function(d) {
+      return d.firsttime === 'yes' && d.income !== 'over_184k' && d.credit === '680_plus';
+    }
+  },
+  {
+    name: 'WISH — Workforce Initiative Subsidy for Homeownership',
+    tag: '4-to-1 Matching Grant',
+    tagColor: 'purple',
+    desc: 'Save $3,750 and get $15,000 toward your down payment — a 4-to-1 match from the Federal Home Loan Bank. Income limit is 80% of Area Median Income, which is about $72,400/year for Riverside County.',
+    reqs: ['Income under ~$72,400 (80% AMI, Riverside County)', 'First-time buyer', 'Must save at least $3,750 in a qualifying account', 'Available through participating lenders only'],
+    url: 'https://www.fhlbsf.com/community/wish-down-payment',
+    check: function(d) {
+      return d.firsttime === 'yes' && d.savings !== 'under_5k' &&
+             (d.income === 'under_60k' || d.income === '60k_100k');
+    }
+  },
+  {
+    name: 'VA Home Loan',
+    tag: 'Veterans Only — Zero Down',
+    tagColor: 'red',
+    desc: 'Zero down payment, no monthly mortgage insurance, and competitive rates. This is the single best loan available for those who qualify. Can be used anywhere in Riverside County. No income limit.',
+    reqs: ['Active military, veteran, or surviving spouse', 'Certificate of Eligibility (COE) from VA.gov', 'No income limit, no first-time buyer requirement'],
+    url: 'https://www.va.gov/housing-assistance/home-loans/',
+    check: function(d) { return d.military === 'yes'; }
+  }
+];
+
+var form = document.getElementById('dpa-form');
+var resultsDiv = document.getElementById('dpa-results');
+
+document.querySelectorAll('.dpa-opt input[type=radio]').forEach(function(radio) {
+  radio.addEventListener('change', function() {
+    var group = this.closest('.dpa-options');
+    group.querySelectorAll('.dpa-opt').forEach(function(o) { o.classList.remove('selected'); });
+    this.closest('.dpa-opt').classList.add('selected');
+  });
+});
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  var d = {
+    income:    (form.querySelector('[name=income]:checked') || {}).value,
+    credit:    (form.querySelector('[name=credit]:checked') || {}).value,
+    firsttime: (form.querySelector('[name=firsttime]:checked') || {}).value,
+    savings:   (form.querySelector('[name=savings]:checked') || {}).value,
+    military:  (form.querySelector('[name=military]:checked') || {}).value,
+  };
+
+  var matched = PROGRAMS.filter(function(p) { return p.check(d); });
+
+  var tagBg = { green: '#dcfce7', blue: '#dbeafe', gold: '#fef9c3', purple: '#f3e8ff', red: '#fee2e2' };
+  var tagFg = { green: '#166534', blue: '#1e3a8a', gold: '#854d0e', purple: '#581c87', red: '#991b1b' };
+
+  var html = '';
+
+  if (matched.length === 0) {
+    html = '<div class="dpa-none">' +
+      '<h2>Based on your answers, current programs may not be available to you.</h2>' +
+      '<p>The most common reasons: income over the limit, or credit score below 640. ' +
+      'Improving your credit score or connecting with a HUD-approved counselor can open up options. ' +
+      '<a href="/ask">Ask the AI for a personalized plan.</a></p></div>';
+  } else {
+    html += '<div class="dpa-summary"><h2>You likely qualify for ' + matched.length +
+      ' program' + (matched.length > 1 ? 's' : '') + '</h2>' +
+      '<p>These results are based on your answers and Riverside County limits as of 2025. ' +
+      'A CalHFA-approved lender will confirm exact eligibility. ' +
+      '<a href="/ask">Ask the AI any follow-up questions.</a></p></div>';
+
+    html += '<div class="dpa-matches">';
+    matched.forEach(function(p) {
+      var bg = tagBg[p.tagColor] || '#dbeafe';
+      var fg = tagFg[p.tagColor] || '#1e3a8a';
+      html += '<div class="dpa-card">' +
+        '<div class="dpa-card-head">' +
+        '<span class="dpa-tag" style="background:' + bg + ';color:' + fg + '">' + p.tag + '</span>' +
+        '<h3>' + p.name + '</h3></div>' +
+        '<p>' + p.desc + '</p>' +
+        '<ul class="dpa-reqs">' + p.reqs.map(function(r) { return '<li>' + r + '</li>'; }).join('') + '</ul>' +
+        '<a href="' + p.url + '" target="_blank" rel="noopener" class="dpa-link">Official program details &rarr;</a>' +
+        '</div>';
+    });
+    html += '</div>';
+
+    html += '<div class="dpa-cta-box">' +
+      '<p>Want to understand what these programs mean for your income, your zip code, and your timeline?</p>' +
+      '<a href="/ask" class="btn">Ask the AI Your Questions &rarr;</a></div>';
+  }
+
+  resultsDiv.innerHTML = html;
+  resultsDiv.style.display = 'block';
+  resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+</script>
+{% endblock %}

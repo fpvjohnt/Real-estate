@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Riverside Home Guide — Home{% endblock %}
+
+{% block hero %}
+<section class="hero-full">
+  <div class="hero-overlay-card">
+    <p class="hero-card-eyebrow">Murrieta · Temecula · Riverside County</p>
+    <h1 class="hero-card-title">Your Path to Homeownership</h1>
+    <p class="hero-card-sub">Free guidance for first-time buyers in Riverside County.
+      Plain answers about FHA loans, down payments, and every step from credit check
+      to closing day. No jargon. No pressure.</p>
+    <div class="hero-card-btns">
+      <a href="/calculator" class="btn hero-card-btn">See Monthly Cost</a>
+      <a href="/ask" class="btn btn-outline hero-card-btn">Ask the AI</a>
+    </div>
+  </div>
+  <button class="hero-arrow hero-arrow-prev" aria-label="Previous">&#8249;</button>
+  <button class="hero-arrow hero-arrow-next" aria-label="Next">&#8250;</button>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="stats">
+  <div class="stat"><strong>3.5%</strong><span>minimum FHA down payment</span></div>
+  <div class="stat"><strong>2–5%</strong><span>typical closing costs</span></div>
+  <div class="stat"><strong>30–45 days</strong><span>typical escrow in California</span></div>
+  <div class="stat"><strong>580+</strong><span>credit score for lowest FHA down</span></div>
+</section>
+
+<section class="cards">
+  <div class="card">
+    <span class="icon">🧮</span>
+    <h2>Payment Calculator</h2>
+    <p>See your real monthly cost — loan, Riverside County taxes, insurance, and FHA
+      mortgage insurance, all in one number.</p>
+    <a href="/calculator" class="btn">Run the Numbers</a>
+  </div>
+  <div class="card">
+    <span class="icon">💬</span>
+    <h2>Ask AI</h2>
+    <p>Type any question about buying your first home and get an answer in plain
+      simple English. Nothing is a dumb question.</p>
+    <a href="/ask" class="btn">Start Asking</a>
+  </div>
+  <div class="card">
+    <span class="icon">🔎</span>
+    <h2>Property Check</h2>
+    <p>Use the APN to check the real owner, permits, tax bill, Mello-Roos, and
+      square footage before you make an offer.</p>
+    <a href="/property-check" class="btn">Check a Property</a>
+  </div>
+  <div class="card">
+    <span class="icon">🧭</span>
+    <h2>Closing Roadmap</h2>
+    <p>See who handles inspection, escrow, credit checks, employment checks,
+      repairs, legal terms, and refinance questions after your offer is accepted.</p>
+    <a href="/closing-roadmap" class="btn">See What Happens Next</a>
+  </div>
+  <div class="card">
+    <span class="icon">✅</span>
+    <h2>Checklist</h2>
+    <p>Every step from checking your credit to getting your keys, in order, one at
+      a time.</p>
+    <a href="/checklist" class="btn">See the Steps</a>
+  </div>
+  <div class="card">
+    <span class="icon">📖</span>
+    <h2>Glossary</h2>
+    <p>Escrow? DTI? PMI? Real estate words explained the way a friend would explain
+      them.</p>
+    <a href="/glossary" class="btn">Learn the Words</a>
+  </div>
+</section>
+
+<section class="plain-box">
+  <h2>What this tool does</h2>
+  <p>Buying a home for the first time means hearing a lot of new words and dealing
+    with a lot of new people — lenders, agents, escrow officers, inspectors. This
+    tool breaks all of it down one step at a time, with answers focused on
+    <strong>Riverside County</strong> — things like FHA loans, CalHFA down payment
+    help, and what homes actually cost around Murrieta and Temecula.</p>
+  <p>It will not replace your lender or your agent. It helps you walk into those
+    conversations already understanding what they're talking about.</p>
+</section>
+{% endblock %}

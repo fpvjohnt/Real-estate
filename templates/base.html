@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Riverside Home Guide{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">🏠 Riverside Home Guide</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <nav class="nav" id="main-nav">
+        <a href="/" class="{{ 'active' if active == 'home' }}">Home</a>
+        <a href="/ask" class="{{ 'active' if active == 'ask' }}">Ask AI</a>
+        <a href="/calculator" class="{{ 'active' if active == 'calculator' }}">Calculator</a>
+        <a href="/property-check" class="{{ 'active' if active == 'property_check' }}">Property Check</a>
+        <a href="/closing-roadmap" class="{{ 'active' if active == 'closing_roadmap' }}">Closing Roadmap</a>
+        <a href="/checklist" class="{{ 'active' if active == 'checklist' }}">Checklist</a>
+        <a href="/glossary" class="{{ 'active' if active == 'glossary' }}">Glossary</a>
+        <a href="/calhfa" class="{{ 'active' if active == 'calhfa' }}">CalHFA Finder</a>
+      </nav>
+      {% if session.get('paid') %}
+      <div class="user-menu" id="user-menu">
+        <button class="user-avatar" id="user-menu-btn" aria-haspopup="true" aria-expanded="false"
+                aria-label="Account menu">
+          {{ (session.get('user_email') or 'U')[0] | upper }}
+        </button>
+        <div class="user-dropdown" id="user-dropdown" role="menu">
+          <div class="user-dropdown-email">{{ session.get('user_email') }}</div>
+          <a href="/profile" role="menuitem">My Account</a>
+          <a href="/logout" role="menuitem">Log Out</a>
+        </div>
+      </div>
+      {% else %}
+      <a href="/ask" class="btn-nav-cta">Get Started</a>
+      {% endif %}
+    </div>
+  </header>
+
+  {% block hero %}{% endblock %}
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Riverside Home Guide — built for first-time buyers in Murrieta, Temecula,
+        and Riverside County, CA.</p>
+      <p class="disclaimer">This tool gives general information, not legal or financial
+        advice. Always verify details with HUD.gov, CalHFA, or a licensed professional
+        before making decisions.</p>
+    </div>
+  </footer>
+  <script>
+    var toggle = document.getElementById('nav-toggle');
+    var nav = document.getElementById('main-nav');
+    toggle.addEventListener('click', function() {
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+      toggle.innerHTML = open ? '&#10005;' : '&#9776;';
+    });
+    nav.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', false);
+        toggle.innerHTML = '&#9776;';
+      });
+    });
+
+    var menuBtn = document.getElementById('user-menu-btn');
+    var dropdown = document.getElementById('user-dropdown');
+    if (menuBtn && dropdown) {
+      menuBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var open = dropdown.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', open);
+      });
+      document.addEventListener('click', function() {
+        dropdown.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', false);
+      });
+      dropdown.addEventListener('click', function(e) { e.stopPropagation(); });
+    }
+  </script>
+</body>
+</html>

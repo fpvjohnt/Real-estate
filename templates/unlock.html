@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Unlock AI Access — Riverside Home Guide{% endblock %}
+{% block content %}
+<div class="unlock-wrap">
+  <div class="unlock-card">
+
+    <div class="unlock-tabs" role="tablist">
+      <button class="unlock-tab" id="tab-login" role="tab" aria-selected="false"
+              aria-controls="panel-login" onclick="switchTab('login')">
+        Already Have Access
+      </button>
+      <button class="unlock-tab active" id="tab-new" role="tab" aria-selected="true"
+              aria-controls="panel-new" onclick="switchTab('new')">
+        Get Access — $40
+      </button>
+    </div>
+
+    {% if error %}
+    <div class="unlock-error">{{ error }}</div>
+    {% endif %}
+
+    <!-- Returning user panel -->
+    <div class="unlock-panel" id="panel-login" role="tabpanel"
+         aria-labelledby="tab-login" hidden>
+      <span class="unlock-icon">👋</span>
+      <h1>Welcome Back</h1>
+      <p class="unlock-sub">Enter the email you used when you paid. You'll go straight in — no charge.</p>
+      <form action="/checkout" method="POST" class="unlock-form">
+        <label for="email-login">Your email address</label>
+        <input type="email" id="email-login" name="email"
+               placeholder="you@example.com" required autocomplete="email">
+        <button type="submit" class="btn unlock-btn">Restore My Access →</button>
+      </form>
+    </div>
+
+    <!-- New user panel -->
+    <div class="unlock-panel" id="panel-new" role="tabpanel"
+         aria-labelledby="tab-new">
+      <span class="unlock-icon">🔐</span>
+      <h1>Unlock AI Access</h1>
+      <p class="unlock-sub">
+        <strong>One-time $40.</strong> No subscription. No monthly fees.
+        Pay once, use it forever on any device.
+      </p>
+      <ul class="unlock-perks">
+        <li>✅ Ask unlimited questions about buying your first home</li>
+        <li>✅ FHA loans, CalHFA assistance, and down payments in plain English</li>
+        <li>✅ Specialized for Murrieta, Temecula, and Riverside County</li>
+        <li>✅ Your access follows your email — never lost</li>
+      </ul>
+      <form action="/checkout" method="POST" class="unlock-form">
+        <label for="email-new">Your email address</label>
+        <input type="email" id="email-new" name="email"
+               placeholder="you@example.com" required autocomplete="email">
+        <small class="hint">We use your email to restore access if you switch devices or clear your browser.</small>
+        <button type="submit" class="btn unlock-btn">Pay $40 — Unlock AI Access →</button>
+      </form>
+      <p class="unlock-secure">🔒 Payments processed securely by Stripe. We never store or see your card number.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function switchTab(which) {
+  var tabs   = document.querySelectorAll('.unlock-tab');
+  var panels = document.querySelectorAll('.unlock-panel');
+  tabs.forEach(function(t) { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+  panels.forEach(function(p) { p.hidden = true; });
+  document.getElementById('tab-' + which).classList.add('active');
+  document.getElementById('tab-' + which).setAttribute('aria-selected', 'true');
+  document.getElementById('panel-' + which).hidden = false;
+}
+</script>
+{% endblock %}

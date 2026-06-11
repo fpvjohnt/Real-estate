@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}My Account — Riverside Home Guide{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+
+  <div class="profile-card">
+    <div class="profile-avatar-lg">{{ (email or 'U')[0] | upper }}</div>
+    <div class="profile-info">
+      <div class="profile-email">{{ email }}</div>
+      <span class="profile-badge">&#10003; Lifetime Access Active</span>
+    </div>
+  </div>
+
+  <div class="profile-stats">
+    <div class="profile-stat">
+      <strong>{{ usage }}</strong>
+      <span>Questions today</span>
+    </div>
+    <div class="profile-stat">
+      <strong>{{ daily_limit - usage }}</strong>
+      <span>Remaining today</span>
+    </div>
+    <div class="profile-stat">
+      <strong>{{ daily_limit }}</strong>
+      <span>Daily limit</span>
+    </div>
+  </div>
+
+  <div class="profile-actions">
+    <a href="/ask" class="btn">Ask the AI</a>
+    <a href="/calhfa" class="btn btn-outline">CalHFA Finder</a>
+    <a href="/logout" class="btn btn-outline btn-logout">Log Out</a>
+  </div>
+
+  <p class="profile-note">
+    Your access never expires. Come back any time — the {{ daily_limit }} question
+    limit resets every day at midnight UTC.
+  </p>
+
+</div>
+{% endblock %}

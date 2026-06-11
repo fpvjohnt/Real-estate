@@ -1,0 +1,28 @@
+# Secrets — never commit these
+.env
+
+# Local database (customer payment data)
+payments.db
+*.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Claude Code local session data
+.claude/
+
+# Logs
+*.log
+server.out.log
+server.err.log
+
+# OS
+.DS_Store
+Thumbs.db

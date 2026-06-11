@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Ask AI — Riverside Home Guide{% endblock %}
+{% block content %}
+<h1>Ask AI</h1>
+<p class="page-sub">Ask anything about buying your first home in Riverside County.
+  Try: <em>"How much do I need for a down payment with an FHA loan?"</em></p>
+
+<div id="chat-box" class="chat-box">
+  <div class="msg assistant">
+    Hi! I'm your home buying guide for Murrieta, Temecula, and Riverside County.
+    What would you like to know? Nothing is a dumb question here.
+  </div>
+</div>
+
+<form id="chat-form" class="chat-form">
+  <input id="chat-input" type="text" placeholder="Type your question here..."
+         autocomplete="off" required>
+  <button type="submit" id="chat-send" class="btn">Send</button>
+</form>
+
+<script src="{{ url_for('static', filename='chat.js') }}"></script>
+{% endblock %}

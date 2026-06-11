@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Property Check — Riverside Home Guide{% endblock %}
+{% block content %}
+<h1>Property Check</h1>
+<p class="page-sub">Before you offer on a house, get the APN and check the public records.
+  Zillow gives you the listing. This shows you what to verify yourself.</p>
+
+<section class="plain-box">
+  <h2>Start here: protect your cash</h2>
+  <p>If your lender wants you to pay credit cards down, ask this first:
+    <strong>"How much do I need to pay down, on which specific cards, to hit the
+    score you need?"</strong></p>
+  <p>Reason: if you only have a limited cash pile, you do not want to drain it all
+    before closing. Pay what the lender says is needed, then keep the rest for
+    closing costs, inspections, appraisal, and moving.</p>
+</section>
+
+<section class="cards source-cards">
+  <div class="card">
+    <span class="icon">💵</span>
+    <h2>Closing Cost Options</h2>
+    <p>Ask your lender and agent about seller credits, lender credits, CalHFA
+      assistance, and FHA gift funds. Do not guess. Have them put numbers on paper.</p>
+  </div>
+  <div class="card">
+    <span class="icon">🧾</span>
+    <h2>Seller Credits</h2>
+    <p>FHA rules allow interested-party contributions within program limits. Your
+      agent writes seller credit terms into the offer when it makes sense.</p>
+  </div>
+  <div class="card">
+    <span class="icon">🏛️</span>
+    <h2>CalHFA MyHome</h2>
+    <p>CalHFA describes MyHome as assistance for down payment and/or closing costs.
+      Terms change, so verify the current program page before planning around it.</p>
+  </div>
+</section>
+
+<h2>Step 1: Get the APN</h2>
+<p>The APN is the Assessor Parcel Number. It is the key that unlocks the public
+  records for that property.</p>
+
+<ol class="checklist property-steps">
+  <li>
+    <h3>Check the official owner</h3>
+    <p>Use Riverside County Assessor records to compare the listing against the
+      owner of record. If the owner is an LLC, trust, or estate, that changes what
+      questions you ask before offering.</p>
+    <a class="btn btn-outline" href="https://ca-riverside-acr.publicaccessnow.com/Search.aspx" target="_blank" rel="noopener">Open Property Search</a>
+  </li>
+  <li>
+    <h3>Check permits</h3>
+    <p>Use Murrieta's permit portal for additions, remodels, water heaters, HVAC,
+      solar, patio covers, and other work. If the house changed but the permit
+      record does not match, ask your agent before moving forward.</p>
+    <a class="btn btn-outline" href="https://murrietaca-energovpub.tylerhost.net/apps/selfservice#/search" target="_blank" rel="noopener">Open Permit Search</a>
+  </li>
+  <li>
+    <h3>Compare square footage</h3>
+    <p>Compare the listing square footage to the assessor record. If the listing
+      says more than the county record, ask why. It could be a mistake, an addition,
+      or something that was not permitted.</p>
+    <a class="btn btn-outline" href="https://ca-riverside-acr.publicaccessnow.com/Search.aspx" target="_blank" rel="noopener">Check Assessor Record</a>
+  </li>
+  <li>
+    <h3>Pull the full tax bill</h3>
+    <p>Use the Riverside County tax bill by APN. Look for special assessments and
+      Mello-Roos. Do not trust a generic payment estimate until you check the real
+      tax bill.</p>
+    <a class="btn btn-outline" href="https://ca-riverside-ttc.publicaccessnow.com/PropertySearch.aspx" target="_blank" rel="noopener">Open Tax Search</a>
+  </li>
+  <li>
+    <h3>Estimate your reassessed tax</h3>
+    <p>In California, a purchase can create a new assessed value. That means the
+      current owner's tax bill may be lower than yours will be. Budget off your
+      purchase price, not the seller's old tax basis.</p>
+    <a class="btn btn-outline" href="https://www.boe.ca.gov/proptaxes/faqs/changeinownership.htm" target="_blank" rel="noopener">Read CA BOE Rule</a>
+  </li>
+</ol>
+
+<section class="plain-box">
+  <h2>The offer question</h2>
+  <p>After you check the APN, ask your agent this exact question:
+    <strong>"Based on the owner, permits, tax bill, and Mello-Roos, is there
+    anything here that should change my offer?"</strong></p>
+  <p>That is the point of this page. Not to scare you. To keep you from finding out
+    expensive stuff after you are already emotionally attached.</p>
+</section>
+
+<section class="source-list">
+  <h2>Official sources</h2>
+  <ul>
+    <li><a href="https://www.hud.gov/program_offices/housing/sfh/handbook_4000-1" target="_blank" rel="noopener">HUD Single Family Housing Policy Handbook 4000.1</a></li>
+    <li><a href="https://www.calhfa.ca.gov/homebuyer/programs/myhome.htm" target="_blank" rel="noopener">CalHFA MyHome Assistance Program</a></li>
+    <li><a href="https://ca-riverside-acr.publicaccessnow.com/Search.aspx" target="_blank" rel="noopener">Riverside County Assessor property search</a></li>
+    <li><a href="https://ca-riverside-ttc.publicaccessnow.com/PropertySearch.aspx" target="_blank" rel="noopener">Riverside County Treasurer-Tax Collector property search</a></li>
+    <li><a href="https://murrietaca-energovpub.tylerhost.net/apps/selfservice#/search" target="_blank" rel="noopener">City of Murrieta permit search</a></li>
+    <li><a href="https://www.boe.ca.gov/proptaxes/faqs/changeinownership.htm" target="_blank" rel="noopener">California BOE change in ownership FAQ</a></li>
+  </ul>
+</section>
+{% endblock %}
