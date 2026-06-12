@@ -87,6 +87,78 @@
       });
       dropdown.addEventListener('click', function(e) { e.stopPropagation(); });
     }
+
+    /* ---- Scroll reveal: fade sections in as they enter the viewport ---- */
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var revealTargets = document.querySelectorAll(
+      '.card, .stat, .dpa-card, .profile-stat, main.container > h2, ' +
+      'main.container > section, .glossary-term, .check-step'
+    );
+    if (!reduceMotion && 'IntersectionObserver' in window && revealTargets.length) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      revealTargets.forEach(function(el, i) {
+        el.classList.add('reveal');
+        el.style.transitionDelay = (i % 4) * 70 + 'ms';
+        io.observe(el);
+      });
+      // Safety net: if the observer never fires (old or throttled browser),
+      // reveal everything rather than leave content invisible.
+      setTimeout(function() {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
+          var rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight + 100) el.classList.add('visible');
+        });
+      }, 2500);
+      window.addEventListener('scroll', function() {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
+          if (el.getBoundingClientRect().top < window.innerHeight - 20) {
+            el.classList.add('visible');
+          }
+        });
+      }, { passive: true });
+    }
+
+    /* ---- Count-up animation for stat numbers ---- */
+    function animateNumbers(el) {
+      var original = el.textContent;
+      var duration = 1100;
+      var start = null;
+      function frame(ts) {
+        if (!start) start = ts;
+        var progress = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = original.replace(/\d+(\.\d+)?/g, function(numStr) {
+          var target = parseFloat(numStr);
+          var decimals = numStr.indexOf('.') >= 0 ? numStr.split('.')[1].length : 0;
+          return (target * eased).toFixed(decimals);
+        });
+        if (progress < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          el.textContent = original;
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    var statNumbers = document.querySelectorAll('.stat strong, .profile-stat strong');
+    if (!reduceMotion && 'IntersectionObserver' in window && statNumbers.length) {
+      var counterIo = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            animateNumbers(entry.target);
+            counterIo.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      statNumbers.forEach(function(el) { counterIo.observe(el); });
+    }
   </script>
 </body>
 </html>

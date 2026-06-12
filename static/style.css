@@ -984,6 +984,51 @@ a { color: var(--blue); }
   .cards { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* ---------- Interactive polish ---------- */
+
+/* Fade-in as sections scroll into view (JS adds .reveal, then .visible) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Buttons press down when clicked */
+.btn:active,
+.btn-nav-cta:active,
+.unlock-tab:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Lift for cards that didn't have it yet */
+.dpa-card,
+.stat,
+.profile-stat {
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.dpa-card:hover,
+.stat:hover,
+.profile-stat:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Respect users who turn off animations in their OS settings */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  * { scroll-behavior: auto !important; }
+}
+
 /* ---------- User menu (avatar + dropdown) ---------- */
 .user-menu {
   position: relative;
